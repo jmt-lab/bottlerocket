@@ -14,13 +14,13 @@ grub-set-private-var = true
 unified-cgroup-hierarchy = true
 uefi-secure-boot = true
 xfs-data-partition = true
-systemd-networkd = true
 
 [package.metadata.build-variant]
 included-packages = [
 # core
     "release",
     "kernel-6.1",
+    "netdog-systemd-networkd",
 # k8s
     "cni",
     "cni-plugins",
@@ -42,6 +42,7 @@ path = "../variants.rs"
 # core
 release = { path = "../../packages/release" }
 kernel-6_1 = { path = "../../packages/kernel-6.1" }
+netdog = {path = "../../packages/netdog" }
 # k8s
 cni = { path = "../../packages/cni" }
 cni-plugins = { path = "../../packages/cni-plugins" }

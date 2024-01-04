@@ -18,6 +18,7 @@ included-packages = [
     "cni",
     "cni-plugins",
     "kernel-5.10",
+    "netdog-wicked",
     "kubelet-1.23",
     "release",
 ]
@@ -34,6 +35,7 @@ path = "../variants.rs"
 
 [build-dependencies]
 aws-iam-authenticator = { path = "../../packages/aws-iam-authenticator" }
+netdog = {path = "../../packages/netdog" }
 cni = { path = "../../packages/cni" }
 cni-plugins = { path = "../../packages/cni-plugins" }
 kernel-5_10 = { path = "../../packages/kernel-5.10" }

@@ -18,6 +18,7 @@ included-packages = [
     "cni",
     "cni-plugins",
     "kernel-5.15",
+    "netdog-wicked",
     "kubelet-1.25",
     "release",
 ]
@@ -38,4 +39,5 @@ cni = { path = "../../packages/cni" }
 cni-plugins = { path = "../../packages/cni-plugins" }
 kernel-5_15 = { path = "../../packages/kernel-5.15" }
 kubernetes-1_25 = { path = "../../packages/kubernetes-1.25" }
+netdog = {path = "../../packages/netdog" }
 release = { path = "../../packages/release" }

@@ -31,6 +31,7 @@ included-packages = [
     "linux-firmware",
     "kubelet-1.24",
     "release",
+    "netdog-wicked",
 ]
 
 [lib]
@@ -44,3 +45,4 @@ kernel-5_15 = { path = "../../packages/kernel-5.15" }
 linux-firmware = { path = "../../packages/linux-firmware" }
 kubernetes-1_24 = { path = "../../packages/kubernetes-1.24" }
 release = { path = "../../packages/release" }
+netdog = {path = "../../packages/netdog" }

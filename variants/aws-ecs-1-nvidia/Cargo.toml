@@ -20,6 +20,7 @@ included-packages = [
 # core
     "release",
     "kernel-5.10",
+    "netdog-wicked",
 # docker
     "docker-cli",
     "docker-engine",
@@ -40,6 +41,8 @@ path = "../variants.rs"
 # core
 release = { path = "../../packages/release" }
 kernel-5_10 = { path = "../../packages/kernel-5.10" }
+netdog = {path = "../../packages/netdog" }
+
 # docker
 docker-cli = { path = "../../packages/docker-cli" }
 docker-engine = { path = "../../packages/docker-engine" }

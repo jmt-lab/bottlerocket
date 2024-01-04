@@ -15,7 +15,6 @@ grub-set-private-var = true
 unified-cgroup-hierarchy = true
 xfs-data-partition = true
 uefi-secure-boot = true
-systemd-networkd = true
 
 [package.metadata.build-variant]
 image-format = "raw"
@@ -28,6 +27,7 @@ included-packages = [
     "release",
     "kernel-6.1",
     "linux-firmware",
+    "netdog-systemd-networkd",
 # docker
     "docker-cli",
     "docker-engine",
@@ -48,6 +48,7 @@ path = "../variants.rs"
 release = { path = "../../packages/release" }
 kernel-6_1 = { path = "../../packages/kernel-6.1" }
 linux-firmware = { path = "../../packages/linux-firmware" }
+netdog = {path = "../../packages/netdog" }
 # docker
 docker-cli = { path = "../../packages/docker-cli" }
 docker-engine = { path = "../../packages/docker-engine" }

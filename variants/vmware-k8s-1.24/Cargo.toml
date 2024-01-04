@@ -33,6 +33,7 @@ included-packages = [
     "kubelet-1.24",
     "open-vm-tools",
     "release",
+    "netdog-wicked",
 ]
 
 [lib]
@@ -45,3 +46,4 @@ kernel-5_15 = { path = "../../packages/kernel-5.15" }
 kubernetes-1_24 = { path = "../../packages/kubernetes-1.24" }
 open-vm-tools = { path = "../../packages/open-vm-tools" }
 release = { path = "../../packages/release" }
+netdog = {path = "../../packages/netdog" }

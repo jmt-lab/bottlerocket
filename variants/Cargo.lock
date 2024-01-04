@@ -28,6 +28,7 @@ dependencies = [
  "iputils",
  "kernel-6_1",
  "login",
+ "netdog",
  "release",
  "strace",
 ]
@@ -42,6 +43,7 @@ dependencies = [
  "docker-proxy",
  "ecs-agent",
  "kernel-5_10",
+ "netdog",
  "release",
 ]
 
@@ -57,6 +59,7 @@ dependencies = [
  "ecs-gpu-init",
  "kernel-5_10",
  "kmod-5_10-nvidia",
+ "netdog",
  "nvidia-container-toolkit",
  "release",
 ]
@@ -71,6 +74,7 @@ dependencies = [
  "docker-proxy",
  "ecs-agent",
  "kernel-6_1",
+ "netdog",
  "release",
 ]
 
@@ -86,6 +90,7 @@ dependencies = [
  "ecs-gpu-init",
  "kernel-6_1",
  "kmod-6_1-nvidia",
+ "netdog",
  "nvidia-container-toolkit",
  "release",
 ]
@@ -106,6 +111,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_10",
  "kubernetes-1_23",
+ "netdog",
  "release",
 ]
 
@@ -119,6 +125,7 @@ dependencies = [
  "kernel-5_10",
  "kmod-5_10-nvidia",
  "kubernetes-1_23",
+ "netdog",
  "nvidia-container-toolkit",
  "nvidia-k8s-device-plugin",
  "release",
@@ -133,6 +140,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_15",
  "kubernetes-1_24",
+ "netdog",
  "release",
 ]
 
@@ -989,6 +997,10 @@ dependencies = [
 
 [[package]]
 name = "microcode"
+version = "0.1.0"
+
+[[package]]
+name = "netdog"
 version = "0.1.0"
 
 [[package]]
