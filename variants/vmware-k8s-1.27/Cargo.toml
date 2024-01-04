@@ -47,4 +47,4 @@ kernel-5_15 = { path = "../../packages/kernel-5.15" }
 kubernetes-1_27 = { path = "../../packages/kubernetes-1.27" }
 open-vm-tools = { path = "../../packages/open-vm-tools" }
 release = { path = "../../packages/release" }
-netdog = {path = "../../packages/netdog" }
+netdog-wicked = {path = "../../packages/netdog-wicked" }

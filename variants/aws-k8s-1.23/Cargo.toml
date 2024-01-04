@@ -35,7 +35,7 @@ path = "../variants.rs"
 
 [build-dependencies]
 aws-iam-authenticator = { path = "../../packages/aws-iam-authenticator" }
-netdog = {path = "../../packages/netdog" }
+netdog-wicked = {path = "../../packages/netdog-wicked" }
 cni = { path = "../../packages/cni" }
 cni-plugins = { path = "../../packages/cni-plugins" }
 kernel-5_10 = { path = "../../packages/kernel-5.10" }

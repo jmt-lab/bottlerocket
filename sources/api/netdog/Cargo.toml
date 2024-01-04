@@ -9,7 +9,7 @@ publish = false
 exclude = ["README.md"]
 
 [features]
-default = ["wicked"]
+default = []
 wicked = []
 systemd-networkd = []
 

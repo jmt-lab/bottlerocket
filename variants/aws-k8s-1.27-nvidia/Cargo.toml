@@ -50,4 +50,4 @@ release = { path = "../../packages/release" }
 nvidia-container-toolkit = { path = "../../packages/nvidia-container-toolkit" }
 nvidia-k8s-device-plugin = { path = "../../packages/nvidia-k8s-device-plugin" }
 kmod-5_15-nvidia = { path = "../../packages/kmod-5.15-nvidia" }
-netdog = {path = "../../packages/netdog" }
+netdog-wicked = {path = "../../packages/netdog-wicked" }

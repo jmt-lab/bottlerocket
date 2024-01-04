@@ -28,7 +28,7 @@ dependencies = [
  "iputils",
  "kernel-6_1",
  "login",
- "netdog",
+ "netdog-systemd-networkd",
  "release",
  "strace",
 ]
@@ -43,7 +43,7 @@ dependencies = [
  "docker-proxy",
  "ecs-agent",
  "kernel-5_10",
- "netdog",
+ "netdog-wicked",
  "release",
 ]
 
@@ -59,7 +59,7 @@ dependencies = [
  "ecs-gpu-init",
  "kernel-5_10",
  "kmod-5_10-nvidia",
- "netdog",
+ "netdog-wicked",
  "nvidia-container-toolkit",
  "release",
 ]
@@ -74,7 +74,7 @@ dependencies = [
  "docker-proxy",
  "ecs-agent",
  "kernel-6_1",
- "netdog",
+ "netdog-systemd-networkd",
  "release",
 ]
 
@@ -90,7 +90,7 @@ dependencies = [
  "ecs-gpu-init",
  "kernel-6_1",
  "kmod-6_1-nvidia",
- "netdog",
+ "netdog-systemd-networkd",
  "nvidia-container-toolkit",
  "release",
 ]
@@ -111,7 +111,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_10",
  "kubernetes-1_23",
- "netdog",
+ "netdog-wicked",
  "release",
 ]
 
@@ -125,7 +125,7 @@ dependencies = [
  "kernel-5_10",
  "kmod-5_10-nvidia",
  "kubernetes-1_23",
- "netdog",
+ "netdog-wicked",
  "nvidia-container-toolkit",
  "nvidia-k8s-device-plugin",
  "release",
@@ -140,7 +140,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_15",
  "kubernetes-1_24",
- "netdog",
+ "netdog-wicked",
  "release",
 ]
 
@@ -154,6 +154,7 @@ dependencies = [
  "kernel-5_15",
  "kmod-5_15-nvidia",
  "kubernetes-1_24",
+ "netdog-wicked",
  "nvidia-container-toolkit",
  "nvidia-k8s-device-plugin",
  "release",
@@ -168,6 +169,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_15",
  "kubernetes-1_25",
+ "netdog-wicked",
  "release",
 ]
 
@@ -181,6 +183,7 @@ dependencies = [
  "kernel-5_15",
  "kmod-5_15-nvidia",
  "kubernetes-1_25",
+ "netdog-wicked",
  "nvidia-container-toolkit",
  "nvidia-k8s-device-plugin",
  "release",
@@ -195,6 +198,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_15",
  "kubernetes-1_26",
+ "netdog-wicked",
  "release",
 ]
 
@@ -208,6 +212,7 @@ dependencies = [
  "kernel-5_15",
  "kmod-5_15-nvidia",
  "kubernetes-1_26",
+ "netdog-wicked",
  "nvidia-container-toolkit",
  "nvidia-k8s-device-plugin",
  "release",
@@ -222,6 +227,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_15",
  "kubernetes-1_27",
+ "netdog-wicked",
  "release",
 ]
 
@@ -235,6 +241,7 @@ dependencies = [
  "kernel-5_15",
  "kmod-5_15-nvidia",
  "kubernetes-1_27",
+ "netdog-wicked",
  "nvidia-container-toolkit",
  "nvidia-k8s-device-plugin",
  "release",
@@ -249,6 +256,7 @@ dependencies = [
  "cni-plugins",
  "kernel-6_1",
  "kubernetes-1_28",
+ "netdog-systemd-networkd",
  "release",
 ]
 
@@ -262,6 +270,7 @@ dependencies = [
  "kernel-6_1",
  "kmod-6_1-nvidia",
  "kubernetes-1_28",
+ "netdog-systemd-networkd",
  "nvidia-container-toolkit",
  "nvidia-k8s-device-plugin",
  "release",
@@ -927,6 +936,7 @@ dependencies = [
  "kernel-6_1",
  "linux-firmware",
  "login",
+ "netdog-systemd-networkd",
  "release",
  "strace",
 ]
@@ -941,6 +951,7 @@ dependencies = [
  "kernel-5_15",
  "kubernetes-1_24",
  "linux-firmware",
+ "netdog-wicked",
  "release",
 ]
 
@@ -954,6 +965,7 @@ dependencies = [
  "kernel-5_15",
  "kubernetes-1_25",
  "linux-firmware",
+ "netdog-wicked",
  "release",
 ]
 
@@ -967,6 +979,7 @@ dependencies = [
  "kernel-5_15",
  "kubernetes-1_26",
  "linux-firmware",
+ "netdog-wicked",
  "release",
 ]
 
@@ -980,6 +993,7 @@ dependencies = [
  "kernel-5_15",
  "kubernetes-1_27",
  "linux-firmware",
+ "netdog-wicked",
  "release",
 ]
 
@@ -992,6 +1006,7 @@ dependencies = [
  "cni-plugins",
  "kernel-6_1",
  "kubernetes-1_28",
+ "netdog-systemd-networkd",
  "release",
 ]
 
@@ -1000,8 +1015,18 @@ name = "microcode"
 version = "0.1.0"
 
 [[package]]
-name = "netdog"
+name = "netdog-systemd-networkd"
 version = "0.1.0"
+dependencies = [
+ "glibc",
+]
+
+[[package]]
+name = "netdog-wicked"
+version = "0.1.0"
+dependencies = [
+ "glibc",
+]
 
 [[package]]
 name = "nvidia-container-toolkit"
@@ -1177,6 +1202,7 @@ dependencies = [
  "iputils",
  "kernel-6_1",
  "login",
+ "netdog-systemd-networkd",
  "open-vm-tools",
  "release",
  "strace",
@@ -1190,6 +1216,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_15",
  "kubernetes-1_24",
+ "netdog-wicked",
  "open-vm-tools",
  "release",
 ]
@@ -1202,6 +1229,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_15",
  "kubernetes-1_25",
+ "netdog-wicked",
  "open-vm-tools",
  "release",
 ]
@@ -1214,6 +1242,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_15",
  "kubernetes-1_26",
+ "netdog-wicked",
  "open-vm-tools",
  "release",
 ]
@@ -1226,6 +1255,7 @@ dependencies = [
  "cni-plugins",
  "kernel-5_15",
  "kubernetes-1_27",
+ "netdog-wicked",
  "open-vm-tools",
  "release",
 ]
@@ -1238,6 +1268,7 @@ dependencies = [
  "cni-plugins",
  "kernel-6_1",
  "kubernetes-1_28",
+ "netdog-systemd-networkd",
  "open-vm-tools",
  "release",
 ]

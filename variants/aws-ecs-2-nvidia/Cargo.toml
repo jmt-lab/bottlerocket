@@ -48,7 +48,7 @@ path = "../variants.rs"
 # core
 release = { path = "../../packages/release" }
 kernel-6_1 = { path = "../../packages/kernel-6.1" }
-netdog = {path = "../../packages/netdog" }
+netdog-systemd-networkd = {path = "../../packages/netdog-systemd-networkd" }
 # docker
 docker-cli = { path = "../../packages/docker-cli" }
 docker-engine = { path = "../../packages/docker-engine" }

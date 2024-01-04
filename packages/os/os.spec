@@ -27,7 +27,6 @@ Source8: oci-default-hooks-json
 Source9: cfsignal-toml
 Source10: warm-pool-wait-toml
 Source11: cis-checks-bottlerocket-metadata-json
-Source12: 00-resolved.conf
 %if %{with k8s_runtime}
 Source13: cis-checks-k8s-metadata-json
 %endif
@@ -48,7 +47,6 @@ Source114: bootstrap-containers@.service
 Source115: link-kernel-modules.service.in
 Source116: load-kernel-modules.service.in
 Source117: cfsignal.service
-Source118: generate-network-config.service
 Source119: reboot-if-required.service
 Source120: warm-pool-wait.service
 Source122: has-boot-ever-succeeded.service
@@ -461,15 +459,10 @@ install -d %{buildroot}%{_cross_unitdir}
 install -p -m 0644 \
   %{S:100} %{S:101} %{S:102} %{S:103} %{S:105} \
   %{S:106} %{S:107} %{S:110} %{S:111} %{S:112} \
-  %{S:113} %{S:114} %{S:118} %{S:119} %{S:122} \
-  %{S:123} \
+  %{S:113} %{S:114} %{S:119} %{S:122} \
   %{buildroot}%{_cross_unitdir}
 
-%if %{with systemd_networkd}
-install -p -m 0644 %{S:124} %{buildroot}%{_cross_unitdir}
-install -d %{buildroot}%{_cross_libdir}/systemd/resolved.conf.d
-install -p -m 0644 %{S:12} %{buildroot}%{_cross_libdir}/systemd/resolved.conf.d
-%endif
+
 
 %if %{with nvidia_flavor}
 sed -e 's|PREFIX|%{_cross_prefix}|g' %{S:115} > link-kernel-modules.service
