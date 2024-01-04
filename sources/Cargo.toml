@@ -10,6 +10,7 @@ members = [
     "api/datastore",
     "api/early-boot-config",
     "api/ecs-settings-applier",
+    "api/libservice",
     "api/netdog",
     "api/sundog",
     "api/schnauzer",

@@ -1,0 +1,4 @@
+[required-extensions]
+std = "v1"
+ext2 = "v1"
++++

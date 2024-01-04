@@ -1,0 +1,2 @@
+name = "sample"
+restart-commands = ["restart", "me"]

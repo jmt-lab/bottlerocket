@@ -1,0 +1,24 @@
+[package]
+name = "libservice"
+version = "0.1.0"
+authors = ["Sean P. Kelly <seankell@amazon.com>"]
+license = "Apache-2.0 OR MIT"
+edition = "2021"
+publish = false
+build = "build.rs"
+# Don't rebuild crate just because of changes to README.
+exclude = ["README.md"]
+
+[dependencies]
+async-stream = "0.3"
+futures = "0.3"
+log = "0.4"
+schnauzer = { path = "../schnauzer", version = "0.1" }
+serde = "1"
+snafu = "0.7"
+tokio = { version = "~1.32", default-features = false, features = ["fs", "io-std", "macros", "rt-multi-thread"] }  # LTS
+tokio-stream = { version = "0.1", default-features = false, features = ["fs"] }
+toml = "0.5"
+
+[build-dependencies]
+generate-readme = { version = "0.1", path = "../../generate-readme" }
