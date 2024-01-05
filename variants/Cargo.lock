@@ -74,7 +74,7 @@ dependencies = [
  "docker-proxy",
  "ecs-agent",
  "kernel-6_1",
- "netdog-systemd-networkd",
+ "netdog",
  "release",
 ]
 
@@ -1013,6 +1013,13 @@ dependencies = [
 [[package]]
 name = "microcode"
 version = "0.1.0"
+
+[[package]]
+name = "netdog"
+version = "0.1.0"
+dependencies = [
+ "glibc",
+]
 
 [[package]]
 name = "netdog-systemd-networkd"
