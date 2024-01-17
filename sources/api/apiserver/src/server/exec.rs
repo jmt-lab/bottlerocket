@@ -59,7 +59,7 @@ const CAPACITY_UPDATE_INTERVAL: u64 = 128;
 pub(crate) async fn ws_exec(
     r: HttpRequest,
     stream: web::Payload,
-    data: web::Data<crate::server::SharedData>,
+    data: web::Data<crate::server::v1::SharedData>,
 ) -> Result<HttpResponse, Error> {
     info!(
         "Received exec request to {}:{}",

@@ -20,6 +20,7 @@ datastore = { path = "../datastore", version = "0.1" }
 fs2 = "0.4"
 http = "0.2"
 libc = "0.2"
+libservice = { path = "../libservice", version = "0.1" }
 log = "0.4"
 models = { path = "../../models", version = "0.1" }
 nix = "0.26"
@@ -38,3 +39,7 @@ generate-readme = { version = "0.1", path = "../../generate-readme" }
 [dev-dependencies]
 maplit = "1"
 toml = "0.5"
+
+[features]
+default = []
+settings-extensions = []

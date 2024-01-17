@@ -377,6 +377,7 @@ dependencies = [
  "generate-readme",
  "http",
  "libc",
+ "libservice",
  "log",
  "maplit",
  "models",
