@@ -6,7 +6,7 @@ use pest::Parser;
 use pest_derive::Parser;
 use serde::Deserialize;
 use snafu::{ensure, OptionExt, ResultExt};
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, HashSet};
 use std::str::FromStr;
 
 #[derive(Parser, Debug, Clone)]
@@ -19,7 +19,7 @@ pub struct TemplateParser;
 /// Templates have:
 /// * A frontmatter section containing metadata on requirements to render the template.
 /// * A body containing the handlebars template.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Template {
     /// The template frontmatter.
     ///
@@ -42,11 +42,11 @@ type ExtensionVersion = String;
 type HelperName = String;
 
 /// Frontmatter defines the settings extensions and helpers needed to render a template.
-#[derive(Deserialize, Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Deserialize, Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[serde(deny_unknown_fields)]
 pub struct TemplateFrontmatter {
     #[serde(rename = "required-extensions", default)]
-    required_extensions: HashMap<ExtensionName, TemplateExtensionRequirements>,
+    required_extensions: BTreeMap<ExtensionName, TemplateExtensionRequirements>,
 }
 
 /// Template extension requirements can be specified in two ways, similar to Cargo.toml:
@@ -54,7 +54,7 @@ pub struct TemplateFrontmatter {
 ///   * extension = { version = "version", helpers = ["helper1", "helper2"] }
 ///
 /// The first form is simpler but cannot express a dependency on any helpers.
-#[derive(Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Deserialize, Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[serde(untagged)]
 enum TemplateExtensionRequirements {
     Version(ExtensionVersion),
@@ -72,7 +72,7 @@ impl From<ExtensionRequirement> for TemplateExtensionRequirements {
 }
 
 /// Serialized structure of settings and handlebars helper requirements.
-#[derive(Deserialize, Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Deserialize, Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[serde(deny_unknown_fields)]
 struct DetailedTemplateExtensionRequirements {
     version: ExtensionVersion,
