@@ -12,7 +12,7 @@ use std::path::Path;
 use std::process;
 use std::str::FromStr;
 
-use apiserver::serve_v1;
+use apiserver::serve_v2;
 
 /// By default, this is where we create the Unix-domain socket that exposes our API.
 const DEFAULT_BIND_PATH: &str = "/run/api.sock";
@@ -32,7 +32,7 @@ mod error {
         NonexistentDatastore,
 
         #[snafu(display("{}", source))]
-        Server { source: apiserver::V1Error },
+        Server { source: apiserver::V2Error },
 
         #[snafu(display("Logger setup error: {}", source))]
         Logger { source: log::SetLoggerError },
@@ -168,7 +168,7 @@ async fn run() -> Result<()> {
         &args.socket_path, threads, threads_suffix, &args.datastore_path,
     );
 
-    serve_v1(
+    serve_v2(
         &args.socket_path,
         &args.datastore_path,
         threads,

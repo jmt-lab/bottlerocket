@@ -75,4 +75,5 @@ extern crate log;
 
 pub mod server;
 
-pub use server::serve;
+pub use server::v1::{serve as serve_v1, Error as V1Error};
+pub use server::v2::{serve as serve_v2, Error as V2Error};

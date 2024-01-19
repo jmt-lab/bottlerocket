@@ -1,5 +1,4 @@
 use actix_web::{HttpResponseBuilder, ResponseError};
-use datastore::{self, deserialization, serialization};
 use nix::unistd::Gid;
 use snafu::Snafu;
 use std::io;
@@ -9,7 +8,7 @@ use std::string::String;
 // We want server (router/handler) and controller errors together so it's easy to define response
 // error codes for all the high-level types of errors that could happen during a request.
 #[derive(Debug, Snafu)]
-#[snafu(visibility(pub(super)))]
+#[snafu(visibility(pub(crate)))]
 pub enum Error {
     // Systemd Notification errors
     #[snafu(display("Systemd notify error: {}", source))]
@@ -58,6 +57,9 @@ pub enum Error {
     #[snafu(display("Unable to get OS release data: {}", source))]
     ReleaseData { source: bottlerocket_release::Error },
 
+    #[snafu(display("Unable to load service configurations: {}", source))]
+    ServiceConfiguration { source: libservice::Error },
+
     // =^..^=   =^..^=   =^..^=   =^..^=   =^..^=   =^..^=   =^..^=   =^..^=   =^..^=
 
     // Controller errors
@@ -73,20 +75,20 @@ pub enum Error {
     #[snafu(display("Data store error during {}: {}", op, source))]
     DataStore {
         op: String,
-        #[snafu(source(from(datastore::Error, Box::new)))]
-        source: Box<datastore::Error>,
+        #[snafu(source(from(datastore_ng::Error, Box::new)))]
+        source: Box<datastore_ng::Error>,
     },
 
     #[snafu(display("Error deserializing {}: {} ", given, source))]
     Deserialization {
         given: String,
-        source: deserialization::Error,
+        source: serde_json::Error,
     },
 
     #[snafu(display("Error serializing {}: {} ", given, source))]
     DataStoreSerialization {
         given: String,
-        source: serialization::Error,
+        source: serde_json::Error,
     },
 
     #[snafu(display("Error serializing {}: {} ", given, source))]
@@ -99,8 +101,8 @@ pub enum Error {
     NewKey {
         key_type: String,
         name: String,
-        #[snafu(source(from(datastore::Error, Box::new)))]
-        source: Box<datastore::Error>,
+        #[snafu(source(from(datastore_ng::Error, Box::new)))]
+        source: Box<datastore_ng::Error>,
     },
 
     #[snafu(display("Metadata '{}' is not valid JSON: {}", key, source))]
@@ -108,6 +110,9 @@ pub enum Error {
         key: String,
         source: serde_json::Error,
     },
+
+    #[snafu(display("Requested key is not valid: {}", key))]
+    InvalidKey { key: String },
 
     #[snafu(display("Config applier was unable to fork child, returned {}", code))]
     ConfigApplierFork { code: String },

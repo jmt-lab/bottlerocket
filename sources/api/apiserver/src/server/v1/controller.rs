@@ -8,7 +8,7 @@ use std::collections::{HashMap, HashSet};
 use std::io::Write;
 use std::process::{Command, Stdio};
 
-use crate::server::error::{self, Result};
+use super::error::{self, Result};
 use actix_web::HttpResponse;
 use datastore::deserialization::{from_map, from_map_with_prefix};
 use datastore::serialization::to_pairs;

@@ -17,7 +17,7 @@ use log::{debug, error, info};
 use model::exec::{Capacity, ClientMessage, ServerMessage};
 use std::convert::TryFrom;
 use std::fmt::Debug;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::mpsc::TrySendError;
 use std::time::{Duration, Instant};
 
@@ -55,11 +55,10 @@ const MAX_MESSAGES_OUTSTANDING: u64 = 1024;
 // performance between 64 and 512.
 const CAPACITY_UPDATE_INTERVAL: u64 = 128;
 
-/// Starts the WebSocket, handing control of the message stream to our WsExec actor.
-pub(crate) async fn ws_exec(
+pub(crate) async fn ws_exec<P: AsRef<Path>>(
     r: HttpRequest,
     stream: web::Payload,
-    data: web::Data<crate::server::v1::SharedData>,
+    exec_socket_path: P,
 ) -> Result<HttpResponse, Error> {
     info!(
         "Received exec request to {}:{}",
@@ -67,7 +66,11 @@ pub(crate) async fn ws_exec(
         r.path()
     );
 
-    ws::start(WsExec::new(data.exec_socket_path.clone()), &r, stream)
+    ws::start(
+        WsExec::new(exec_socket_path.as_ref().to_owned()),
+        &r,
+        stream,
+    )
 }
 
 /// WsExec is an actor that represents the WebSocket connection to the client.  All messages to and

@@ -1,11 +1,9 @@
-use crate::server::{
-    controller, error, exec, notify_unix_socket_ready, BLOODHOUND_BIN, BLOODHOUND_K8S_CHECKS,
-};
+use crate::server::{exec, BLOODHOUND_BIN, BLOODHOUND_K8S_CHECKS};
 use actix_web::{
     body::BoxBody, error::ResponseError, web, App, HttpRequest, HttpResponse, HttpServer, Responder,
 };
 use datastore::{Committed, FilesystemDataStore, Key, Value};
-use error::{Error, Result};
+use error::Result;
 use fs2::FileExt;
 use http::StatusCode;
 use model::{ConfigurationFiles, Model, Report, Services, Settings};
@@ -17,9 +15,21 @@ use std::os::unix::fs::PermissionsExt;
 use std::os::unix::process::ExitStatusExt;
 use std::path::{Path, PathBuf};
 use std::process::Command;
-use std::sync;
+use std::{env, sync};
 use thar_be_updates::status::{UpdateStatus, UPDATE_LOCKFILE};
 use tokio::process::Command as AsyncCommand;
+
+mod controller;
+pub mod error;
+
+pub use error::Error;
+
+/// SharedData is responsible for any data needed by web handlers that isn't provided by the client
+/// in the request.
+pub(crate) struct SharedData {
+    pub(crate) ds: sync::RwLock<FilesystemDataStore>,
+    pub(crate) exec_socket_path: PathBuf,
+}
 
 pub async fn serve<P1, P2, P3>(
     socket_path: P1,
@@ -87,7 +97,7 @@ where
                     .route("/deactivate-update", web::post().to(deactivate_update)),
             )
             .service(web::scope("/updates").route("/status", web::get().to(get_update_status)))
-            .service(web::resource("/exec").route(web::get().to(exec::ws_exec)))
+            .service(web::resource("/exec").route(web::get().to(websocket_exec)))
             .service(
                 web::scope("/report")
                     .route("", web::get().to(list_reports))
@@ -114,6 +124,25 @@ where
     notify_unix_socket_ready()?;
 
     http_server.run().await.context(error::ServerStartSnafu)
+}
+
+// sd_notify helper
+fn notify_unix_socket_ready() -> Result<()> {
+    if env::var_os("NOTIFY_SOCKET").is_some() {
+        ensure!(
+            Command::new("systemd-notify")
+                .arg("--ready")
+                .arg("--no-block")
+                .status()
+                .context(error::SystemdNotifySnafu)?
+                .success(),
+            error::SystemdNotifyStatusSnafu
+        );
+        env::remove_var("NOTIFY_SOCKET");
+    } else {
+        info!("NOTIFY_SOCKET not set, not calling systemd-notify");
+    }
+    Ok(())
 }
 
 // =^..^=   =^..^=   =^..^=   =^..^=   =^..^=   =^..^=   =^..^=   =^..^=   =^..^=
@@ -515,6 +544,15 @@ async fn reboot() -> Result<HttpResponse> {
     Ok(HttpResponse::NoContent().finish())
 }
 
+/// Starts the WebSocket, handing control of the message stream to our WsExec actor.
+pub(crate) async fn websocket_exec(
+    r: HttpRequest,
+    stream: web::Payload,
+    data: web::Data<SharedData>,
+) -> std::result::Result<HttpResponse, actix_web::Error> {
+    exec::ws_exec(r, stream, &data.exec_socket_path).await
+}
+
 /// Gets the set of report types supported by this host.
 async fn list_reports() -> Result<ReportListResponse> {
     // Add each report to list response when adding a new handler
@@ -591,6 +629,7 @@ impl ResponseError for error::Error {
             EmptyInput { .. } => StatusCode::BAD_REQUEST,
             NewKey { .. } => StatusCode::BAD_REQUEST,
             ReportTypeMissing { .. } => StatusCode::BAD_REQUEST,
+            InvalidKey { .. } => StatusCode::BAD_REQUEST,
 
             // 404 Not Found
             MissingData { .. } => StatusCode::NOT_FOUND,
@@ -630,6 +669,7 @@ impl ResponseError for error::Error {
             SystemdNotifyStatus {} => StatusCode::INTERNAL_SERVER_ERROR,
             SetPermissions { .. } => StatusCode::INTERNAL_SERVER_ERROR,
             SetGroup { .. } => StatusCode::INTERNAL_SERVER_ERROR,
+            ServiceConfiguration { .. } => StatusCode::INTERNAL_SERVER_ERROR,
             ReleaseData { .. } => StatusCode::INTERNAL_SERVER_ERROR,
             Shutdown { .. } => StatusCode::INTERNAL_SERVER_ERROR,
             Reboot { .. } => StatusCode::INTERNAL_SERVER_ERROR,
@@ -644,13 +684,6 @@ impl ResponseError for error::Error {
 
         HttpResponse::build(status_code).body(self.to_string())
     }
-}
-
-/// SharedData is responsible for any data needed by web handlers that isn't provided by the client
-/// in the request.
-pub(crate) struct SharedData {
-    pub(crate) ds: sync::RwLock<FilesystemDataStore>,
-    pub(crate) exec_socket_path: PathBuf,
 }
 
 /// Helper macro for implementing the actix-web Responder trait for a type.
