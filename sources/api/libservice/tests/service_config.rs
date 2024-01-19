@@ -27,7 +27,7 @@ async fn testcase_simple() {
     assert_eq!(all_configs.len(), 1);
 
     let affected_configs: Vec<_> = service_configs
-        .configurations_affected_by_setting("sample-extension", "v1")
+        .configurations_affected_by_setting("sample-extension")
         .collect();
 
     assert_eq!(affected_configs.len(), 1);
@@ -140,14 +140,14 @@ async fn testcase_multi() {
     // =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=
     // Check that queries result as expected.
     let affected_configs = service_configs
-        .configurations_affected_by_setting("std", "v1")
+        .configurations_affected_by_setting("std")
         .collect::<BTreeSet<_>>();
     assert_eq!(affected_configs.len(), all_configs.len());
     assert_eq!(affected_configs, all_configs.iter().cloned().collect());
 
     // =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=
     let affected_configs = service_configs
-        .configurations_affected_by_setting("ext1", "v1")
+        .configurations_affected_by_setting("ext1")
         .collect::<Vec<_>>();
     assert_eq!(affected_configs.len(), 1);
     assert_eq!(&affected_configs[0], sample1_config);
@@ -160,7 +160,7 @@ async fn testcase_multi() {
 
     // =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=
     let affected_configs = service_configs
-        .configurations_affected_by_setting("ext2", "v1")
+        .configurations_affected_by_setting("ext2")
         .collect::<Vec<_>>();
     assert_eq!(affected_configs.len(), 1);
     assert_eq!(&affected_configs[0], sample2_config);
@@ -173,7 +173,7 @@ async fn testcase_multi() {
 
     // =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=  =^..^=
     let affected_configs = service_configs
-        .configurations_affected_by_setting("no-such-extension", "no-such-version")
+        .configurations_affected_by_setting("no-such-extension")
         .collect::<Vec<_>>();
     assert_eq!(affected_configs.len(), 0);
 }

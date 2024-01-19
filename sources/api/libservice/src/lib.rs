@@ -12,6 +12,8 @@ pub mod service;
 pub mod template;
 mod util;
 
+pub use error::Error;
+
 // Services and configuration templates are stored under subdirectories of a single root.
 const TEMPLATES_ROOT_PATH: &str = "templates";
 const SERVICES_ROOT_PATH: &str = "services";
@@ -41,20 +43,15 @@ impl ServiceConfigurations {
     pub fn configurations_affected_by_setting<'a>(
         &'a self,
         settings_extension_name: &str,
-        settings_extension_version: &str,
     ) -> impl Iterator<Item = &'a ConfigTemplate> + '_ {
         let settings_extension_name = settings_extension_name.to_owned();
-        let settings_extension_version = settings_extension_version.to_owned();
 
         self.config_templates.iter().filter(move |config_template| {
             config_template
                 .template
                 .frontmatter
                 .extension_requirements()
-                .any(|extension_requirement| {
-                    extension_requirement.name == settings_extension_name
-                        && extension_requirement.version == settings_extension_version
-                })
+                .any(|extension_requirement| extension_requirement.name == settings_extension_name)
         })
     }
 
@@ -68,6 +65,18 @@ impl ServiceConfigurations {
             .affected_services
             .iter()
             .filter_map(|service_path| self.services.get(service_path))
+    }
+
+    /// Returns the set of configuration templates associated with a given service.
+    pub fn config_templates_for_service<'a>(
+        &'a self,
+        service: &'a Service,
+    ) -> impl Iterator<Item = &ConfigTemplate> + '_ {
+        self.config_templates.iter().filter(move |config_template| {
+            config_template
+                .affected_services
+                .contains(&service.filepath)
+        })
     }
 }
 

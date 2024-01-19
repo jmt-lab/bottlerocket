@@ -19,6 +19,7 @@ const DEFAULT_RENDER_DESTINATION_MODE: &str = "0644";
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ConfigTemplate {
+    pub name: String,
     /// The path to the template file.
     pub template_filepath: PathBuf,
     pub template: Template,
@@ -37,6 +38,12 @@ impl ConfigTemplate {
         P2: AsRef<Path>,
     {
         let template_filepath = filepath.as_ref().to_owned();
+        let name = template_filepath
+            .file_name()
+            .map(|s| s.to_string_lossy())
+            .unwrap_or_default()
+            .to_string();
+
         let template_str =
             fs::read_to_string(&template_filepath)
                 .await
@@ -62,6 +69,7 @@ impl ConfigTemplate {
         let render_destinations = Self::load_render_destinations(&render_configs_dir).await?;
 
         Ok(ConfigTemplate {
+            name,
             template_filepath,
             template,
             affected_services,
