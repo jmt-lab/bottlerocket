@@ -1,0 +1,25 @@
+[package]
+name = "datastore-ng"
+version = "0.1.0"
+authors = ["Tom Kirchner <tjk@amazon.com>"]
+license = "Apache-2.0 OR MIT"
+edition = "2021"
+publish = false
+build = "build.rs"
+# Don't rebuild crate just because of changes to README.
+exclude = ["README.md"]
+
+[dependencies]
+log = "0.4"
+percent-encoding = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+snafu = "0.7"
+walkdir = "2"
+
+[build-dependencies]
+generate-readme = { version = "0.1", path = "../../generate-readme" }
+
+[dev-dependencies]
+maplit = "1"
+toml = "0.5"

@@ -8,6 +8,7 @@ members = [
     "api/certdog",
     "api/corndog",
     "api/datastore",
+    "api/datastore-ng",
     "api/early-boot-config",
     "api/ecs-settings-applier",
     "api/libservice",
