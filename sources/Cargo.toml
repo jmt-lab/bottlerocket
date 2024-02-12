@@ -72,6 +72,8 @@ members = [
 
     "imdsclient",
 
+    "dogtag",
+
     "driverdog",
 
     "generate-readme",

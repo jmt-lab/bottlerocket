@@ -1,0 +1,29 @@
+[package]
+name = "dogtag"
+version = "0.1.0"
+authors = ["Jarrett Tierney <jmt@amazon.com>"]
+license = "Apache-2.0 OR MIT"
+edition = "2021"
+publish = false
+exclude = ["README.md"]
+
+[[bin]]
+name = "01-imds"
+path = "bin/imds.rs"
+
+[[bin]]
+name = "00-reverse-dns"
+path = "bin/reverse.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+argh = "0.1"
+dns-lookup = "2"
+snafu = "0.8"
+
+[build-dependencies]
+generate-readme = { version = "0.1", path = "../generate-readme" }
+
+[dev-dependencies]
+mockito = "1.2"
